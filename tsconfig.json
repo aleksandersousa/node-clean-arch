@@ -1,9 +1,14 @@
 {
-    "compilerOptions": {
-        "outDir": "./dist",
-        "module": "CommonJS",
-        "target": "ES2023",
-        "esModuleInterop": true,
-        "allowJs": true
-    }
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "CommonJS",
+    "target": "ES6",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "strictNullChecks": true
+  },
+  "exclude": [
+    "node_modules",
+    "./.eslintrc.js"
+  ],
 }
