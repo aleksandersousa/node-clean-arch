@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "aleksandersousa <aleksander-ssousa@outlook.com>",
   "license": "MIT",
+  "scripts": {
+    "prepare": "husky install"
+  },
   "devDependencies": {
     "@types/node": "^20.4.5",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
@@ -17,6 +20,8 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-unused-imports": "^3.0.0",
     "git-commit-msg-linter": "^5.0.4",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
     "prettier": "^3.0.0",
     "typescript": "*"
   },
