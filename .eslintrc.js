@@ -7,7 +7,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   overrides: [
     {
-      files: ['*.ts', '*.tsx'], // Your TypeScript files extension
+      files: ['*.ts'],
       extends: ['standard-with-typescript', 'prettier'],
 
       parserOptions: {
@@ -15,9 +15,11 @@ module.exports = {
         sourceType: 'module',
         project: ['./tsconfig.json'],
       },
+
+      rules: {
+        '@typescript-eslint/strict-boolean-expressions': 'off',
+        'prettier/prettier': 'error',
+      },
     },
   ],
-  rules: {
-    'prettier/prettier': 'error',
-  },
 };
