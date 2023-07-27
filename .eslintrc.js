@@ -18,7 +18,15 @@ module.exports = {
 
       rules: {
         '@typescript-eslint/strict-boolean-expressions': 'off',
-        'prettier/prettier': 'error',
+        'prettier/prettier': [
+          'error',
+          {
+            trailingComma: 'all',
+            arrowParens: 'avoid',
+            singleQuote: true,
+            printWidth: 120
+          }
+        ],
       },
     },
   ],
