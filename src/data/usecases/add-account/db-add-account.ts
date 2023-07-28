@@ -1,10 +1,4 @@
-import {
-  type AddAccountRepository,
-  type AccountModel,
-  type AddAccount,
-  type AddAccountModel,
-  type Encrypter,
-} from './db-add-account-protocols';
+import { type AddAccountRepository, type AccountModel, type AddAccount, type AddAccountModel, type Encrypter } from '.';
 
 export class DbAddAccount implements AddAccount {
   constructor(
