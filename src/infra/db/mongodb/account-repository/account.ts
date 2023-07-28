@@ -14,8 +14,6 @@ export class AccountMongoRepository implements AddAccountRepository {
       { upsert: true, returnDocument: 'after' },
     );
 
-    const { _id, ...account } = { ...document, id: document?._id.toHexString() };
-
-    return account as unknown as AccountModel;
+    return MongoHelper.mapMongoDocument<AccountModel>(document);
   }
 }
