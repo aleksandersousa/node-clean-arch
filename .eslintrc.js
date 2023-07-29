@@ -19,6 +19,7 @@ module.exports = {
       rules: {
         '@typescript-eslint/strict-boolean-expressions': 'off',
         '@typescript-eslint/no-floating-promises': 'off',
+        'array-callback-return': 'off',
         'prettier/prettier': [
           'error',
           {
