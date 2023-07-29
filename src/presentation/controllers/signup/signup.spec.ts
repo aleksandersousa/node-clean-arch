@@ -1,4 +1,4 @@
-import { InvalidParamError, MissingParamError, ServerError } from '../../errors';
+import { InvalidParamError, MissingParamError } from '../../errors';
 import { SignupController } from './signup';
 import { type AddAccountModel, type AddAccount, type EmailValidator, type AccountModel, type HttpRequest } from '.';
 import { badRequest, ok, serverError } from '../../helpers/http-helper';
@@ -158,7 +158,7 @@ describe('Signup Controller', () => {
 
     const httpResponse = await sut.handle(makeFakeRequest());
 
-    expect(httpResponse).toEqual(serverError(new ServerError(new Error().stack)));
+    expect(httpResponse).toEqual(serverError(new Error()));
   });
 
   test('Should return 500 if AddAccount throws', async () => {
@@ -172,7 +172,7 @@ describe('Signup Controller', () => {
 
     const httpResponse = await sut.handle(makeFakeRequest());
 
-    expect(httpResponse).toEqual(serverError(new ServerError(new Error().stack)));
+    expect(httpResponse).toEqual(serverError(new Error()));
   });
 
   test('Should call AddAccount with correct values', async () => {
