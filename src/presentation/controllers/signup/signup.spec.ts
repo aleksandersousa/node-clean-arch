@@ -1,6 +1,13 @@
 import { InvalidParamError, MissingParamError } from '../../errors';
 import { SignupController } from './signup';
-import { type AddAccountModel, type AddAccount, type EmailValidator, type AccountModel, type HttpRequest } from '.';
+import {
+  type AddAccountModel,
+  type AddAccount,
+  type EmailValidator,
+  type AccountModel,
+  type HttpRequest,
+  type Validation,
+} from '.';
 import { badRequest, ok, serverError } from '../../helpers/http-helper';
 
 const makeEmailValidator = (): EmailValidator => {
@@ -23,13 +30,22 @@ const makeAddAccount = (): AddAccount => {
 
   return new AddAccountStub();
 };
+const makeValidation = (): Validation => {
+  class ValidationStub implements Validation {
+    validate(_input: any): Error | null {
+      return null;
+    }
+  }
+
+  return new ValidationStub();
+};
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {
-    name: 'any name',
+    name: 'any_name',
     email: 'any_email@mail.com',
-    password: 'any password',
-    passwordConfirmation: 'any password',
+    password: 'any_password',
+    passwordConfirmation: 'any_password',
   },
 });
 
@@ -44,14 +60,16 @@ interface SutTypes {
   sut: SignupController;
   emailValidatorStub: EmailValidator;
   addAccountStub: AddAccount;
+  validationStub: Validation;
 }
 
 const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator();
   const addAccountStub = makeAddAccount();
-  const sut = new SignupController(emailValidatorStub, addAccountStub);
+  const validationStub = makeValidation();
+  const sut = new SignupController(emailValidatorStub, addAccountStub, validationStub);
 
-  return { sut, emailValidatorStub, addAccountStub };
+  return { sut, emailValidatorStub, addAccountStub, validationStub };
 };
 
 describe('Signup Controller', () => {
@@ -185,9 +203,9 @@ describe('Signup Controller', () => {
     await sut.handle(makeFakeRequest());
 
     expect(addSpy).toHaveBeenCalledWith({
-      name: 'any name',
+      name: 'any_name',
       email: 'any_email@mail.com',
-      password: 'any password',
+      password: 'any_password',
     });
   });
 
@@ -197,5 +215,18 @@ describe('Signup Controller', () => {
     const httpResponse = await sut.handle(makeFakeRequest());
 
     expect(httpResponse).toEqual(ok(makeFakeAccount()));
+  });
+
+  test('Should call Validation with correct value', async () => {
+    const { sut, validationStub } = makeSut();
+
+    const validateSpy = jest.spyOn(validationStub, 'validate').mockImplementationOnce(() => {
+      throw new Error();
+    });
+    const httpRequest = makeFakeRequest();
+
+    await sut.handle(httpRequest);
+
+    expect(validateSpy).toHaveBeenCalledWith(httpRequest.body);
   });
 });
