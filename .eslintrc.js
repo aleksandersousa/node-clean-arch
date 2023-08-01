@@ -21,6 +21,7 @@ module.exports = {
         '@typescript-eslint/no-floating-promises': 'off',
         '@typescript-eslint/no-misused-promises': 'off',
         'array-callback-return': 'off',
+        'unused-imports/no-unused-imports-ts': 'error',
         'prettier/prettier': [
           'error',
           {
