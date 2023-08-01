@@ -14,6 +14,6 @@ export class AccountMongoRepository implements AddAccountRepository {
       { upsert: true, returnDocument: 'after' },
     );
 
-    return MongoHelper.mapMongoDocument<AccountModel>(document);
+    return MongoHelper.parseDocument<AccountModel>(document);
   }
 }

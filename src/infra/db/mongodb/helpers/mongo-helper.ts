@@ -22,7 +22,7 @@ export const MongoHelper = {
     return this.client.db().collection(name);
   },
 
-  mapMongoDocument<T>(collection: WithId<Document> | null): T {
+  parseDocument<T>(collection: WithId<Document> | null): T {
     const { _id, ...account } = { ...collection, id: collection?._id.toHexString() };
     return account as T;
   },
