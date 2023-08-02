@@ -1,4 +1,4 @@
-import { type LogErrorRespository } from '../../data/protocols/log-error-repository';
+import { type LogErrorRespository } from '../../data/protocols/db/log-error-repository';
 import { type AccountModel } from '../../domain/models';
 import { ok, serverError } from '../../presentation/helpers/http/http-helper';
 import { type Controller, type HttpRequest, type HttpResponse } from '../../presentation/protocols';
