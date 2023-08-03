@@ -161,4 +161,12 @@ describe('DbAuthentication', () => {
 
     expect(promise).rejects.toThrow();
   });
+
+  test('Should return a token on success', async () => {
+    const { sut } = makeSut();
+
+    const accessToken = await sut.auth(makeFakeAuthentication());
+
+    expect(accessToken).toBe('any_token');
+  });
 });
