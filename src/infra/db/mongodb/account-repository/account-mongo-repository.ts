@@ -14,7 +14,7 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
       { upsert: true, returnDocument: 'after' },
     );
 
-    return MongoHelper.parseDocument<AccountModel>(document);
+    return MongoHelper.parseDocument<AccountModel>(document) as AccountModel;
   }
 
   async loadByEmail(email: string): Promise<AccountModel | null> {

@@ -22,8 +22,12 @@ export const MongoHelper = {
     return this.client.db().collection(name);
   },
 
-  parseDocument<T>(collection: WithId<Document> | null): T {
-    const { _id, ...account } = { ...collection, id: collection?._id.toHexString() };
+  parseDocument<T>(collection: WithId<Document> | null): T | null {
+    if (!collection) {
+      return null;
+    }
+
+    const { _id, ...account } = { ...collection, id: collection._id.toHexString() };
     return account as T;
   },
 };
