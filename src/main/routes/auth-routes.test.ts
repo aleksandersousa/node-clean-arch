@@ -1,6 +1,20 @@
 import request from 'supertest';
 import app from '../config/app';
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper';
+import { type Collection } from 'mongodb';
+import { type AddAccountModel } from '../../domain/usecases';
+import { hash } from 'bcrypt';
+
+let accountCollection: Collection;
+
+const makeFakeAddAccount = async (): Promise<AddAccountModel> => {
+  const password = await hash('any_password', 12);
+  return {
+    name: 'any_name',
+    email: 'any_email@email.com',
+    password,
+  };
+};
 
 describe('Auth Routes', () => {
   beforeAll(async () => {
@@ -12,7 +26,7 @@ describe('Auth Routes', () => {
   });
 
   beforeEach(async () => {
-    const accountCollection = await MongoHelper.getCollection('accounts');
+    accountCollection = await MongoHelper.getCollection('accounts');
     accountCollection.deleteMany({});
   });
 
@@ -21,6 +35,17 @@ describe('Auth Routes', () => {
       await request(app)
         .post('/api/signup')
         .send({ name: 'Aleksander', email: 'aleksander@email.com', password: '123', passwordConfirmation: '123' })
+        .expect(200);
+    });
+  });
+
+  describe('POST /login', () => {
+    test('Should return 200 on login', async () => {
+      await accountCollection.insertOne(await makeFakeAddAccount());
+
+      await request(app)
+        .post('/api/login')
+        .send({ email: 'any_email@email.com', password: 'any_password' })
         .expect(200);
     });
   });
