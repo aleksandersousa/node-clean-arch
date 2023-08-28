@@ -25,7 +25,7 @@ services:
     command: bash -c "yarn install --only=prod && yarn debug"
 
     volumes:
-      - ./dist:/usr/src/clean-node-api/dist
+      - ./dist/:/usr/src/clean-node-api/dist
       - ./package.json:/usr/src/clean-node-api/package.json
 
     ports:

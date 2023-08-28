@@ -3,6 +3,7 @@
     "outDir": "dist",
     "module": "CommonJS",
     "target": "ES6",
+    "rootDir": "src",
     // "sourceMap": true,
     "esModuleInterop": true,
     "strictNullChecks": true
