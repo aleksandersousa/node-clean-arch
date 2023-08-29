@@ -1,5 +1,5 @@
 import { type HttpRequest, type HttpResponse, type Controller, type Validation, type AddSurvey } from '.';
-import { badRequest, serverError } from '../../../helpers/http/http-helper';
+import { badRequest, noContent, serverError } from '../../../helpers/http/http-helper';
 
 export class AddSurveyController implements Controller {
   constructor(
@@ -17,7 +17,7 @@ export class AddSurveyController implements Controller {
       const { question, answers } = httpRequest.body;
       await this.addSurvey.add({ question, answers });
 
-      return { statusCode: 200, body: { ok: 'ok' } };
+      return noContent();
     } catch (error) {
       return serverError(error);
     }
