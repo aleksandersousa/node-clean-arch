@@ -1,6 +1,6 @@
 import { type Validation, type HttpRequest, type AddSurvey, type AddSurveyModel } from '.';
 import { MissingParamError } from '../../../errors';
-import { badRequest } from '../../../helpers/http/http-helper';
+import { badRequest, serverError } from '../../../helpers/http/http-helper';
 import { AddSurveyController } from './add-survey-controller';
 
 const makeValidation = (): Validation => {
@@ -78,5 +78,17 @@ describe('AddSurvey Controller', () => {
     await sut.handle(httpRequest);
 
     expect(addSpy).toHaveBeenCalledWith(httpRequest.body);
+  });
+
+  test('Should return 500 if AddSurvey throws', async () => {
+    const { sut, addSurveyStub } = makeSut();
+    jest.spyOn(addSurveyStub, 'add').mockReturnValueOnce(
+      new Promise((_resolve, reject) => {
+        reject(new Error());
+      }),
+    );
+    const httpResponse = await sut.handle(makeFakeRequest());
+
+    expect(httpResponse).toEqual(serverError(new Error()));
   });
 });
