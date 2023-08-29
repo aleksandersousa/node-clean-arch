@@ -1,4 +1,4 @@
-import { type Validation } from '../../../../presentation/controllers/signup';
+import { type Validation } from '../../../../presentation/protocols';
 import {
   CompareFieldsValidation,
   EmailValidation,
