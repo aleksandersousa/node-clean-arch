@@ -1,2 +1,2 @@
-export * from './signup/signup-factory';
-export * from './login/login-factory';
+export * from './controllers/signup/signup-controller-factory';
+export * from './controllers/login/login-controller-factory';
