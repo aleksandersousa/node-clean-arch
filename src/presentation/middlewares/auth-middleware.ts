@@ -11,7 +11,7 @@ export class AuthMiddleware implements Middleware {
     if (accessToken) {
       const account = await this.loadAccountByTokenStub.load(accessToken);
       if (account) {
-        return ok(account);
+        return ok({ accountId: account.id });
       }
     }
 
