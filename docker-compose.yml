@@ -1,6 +1,21 @@
 version: "3"
 
 services:
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: aleksander
+      ME_CONFIG_BASICAUTH_PASSWORD: 123
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 123
+    links:
+      - mongo
+    networks:
+      - mongo-compose-network
+
   mongo:
     container_name: mongo-container
 
@@ -13,6 +28,9 @@ services:
 
     ports:
       - "27017:27017"
+    
+    networks:
+      - mongo-compose-network
 
   api:
     container_name: api-container
@@ -34,3 +52,10 @@ services:
 
     links:
       - mongo
+
+    networks:
+      - mongo-compose-network
+
+networks: 
+  mongo-compose-network:
+    driver: bridge
