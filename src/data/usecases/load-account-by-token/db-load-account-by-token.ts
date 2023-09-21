@@ -7,7 +7,7 @@ export class DbLoadAccountByToken implements LoadAccountByToken {
     await this.decrypter.decrypt(accessToken);
 
     return await new Promise(resolve => {
-      resolve({ id: 'any_id', email: 'any_email@email.com', name: 'any_name', password: 'any_password' });
+      resolve(null);
     });
   }
 }
