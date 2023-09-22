@@ -11,7 +11,7 @@ export const adaptMiddleware = (middleware: Middleware) => {
 
     const statusCode = httpResponse.statusCode as number;
     if (statusCode === 200) {
-      Object.assign(req, httpResponse);
+      Object.assign(req, httpResponse.body);
       next();
     } else {
       res.status(statusCode).json(httpResponse.body.message);
