@@ -8,3 +8,4 @@ export * from './db/account/load-account-by-token-repository';
 export * from './db/account/update-access-token-repository';
 export * from './db/log/log-error-repository';
 export * from './db/survey/add-survey-repository';
+export * from './db/survey/load-surveys-repository';
