@@ -65,27 +65,19 @@ describe('Survey Routes', () => {
       await request(app).get('/api/surveys').expect(403);
     });
 
-    // test('Should return 204 on add survey with valid token', async () => {
-    //   const res = await accountCollection.insertOne({
-    //     name: 'any_name',
-    //     email: 'any_email@email.com',
-    //     password: '12345',
-    //     role: 'admin',
-    //   });
-    //   const id = res.insertedId;
+    test('Should return 204 on load surveys that returns an empty list with valid token', async () => {
+      const res = await accountCollection.insertOne({
+        name: 'any_name',
+        email: 'any_email@email.com',
+        password: '12345',
+      });
+      const id = res.insertedId;
 
-    //   const accessToken = sign({ id }, env.jwtSecret);
+      const accessToken = sign({ id }, env.jwtSecret);
 
-    //   await accountCollection.updateOne({ _id: id }, { $set: { accessToken } });
+      await accountCollection.updateOne({ _id: id }, { $set: { accessToken } });
 
-    //   await request(app)
-    //     .post('/api/surveys')
-    //     .set('x-access-token', accessToken)
-    //     .send({
-    //       question: 'Question',
-    //       answers: [{ image: 'http://image-name.com', answer: 'Answer 1' }, { answer: 'Answer 2' }],
-    //     })
-    //     .expect(204);
-    // });
+      await request(app).get('/api/surveys').set('x-access-token', accessToken).expect(204);
+    });
   });
 });
