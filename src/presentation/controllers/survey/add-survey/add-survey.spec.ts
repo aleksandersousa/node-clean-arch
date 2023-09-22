@@ -2,6 +2,7 @@ import { type Validation, type HttpRequest, type AddSurvey, type AddSurveyModel 
 import { MissingParamError } from '../../../errors';
 import { badRequest, noContent, serverError } from '../../../helpers/http/http-helper';
 import { AddSurveyController } from './add-survey-controller';
+import MockDate from 'mockdate';
 
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
@@ -33,6 +34,7 @@ const makeFakeRequest = (): HttpRequest => ({
         answer: 'any_answer',
       },
     ],
+    date: new Date(),
   },
 });
 
@@ -51,6 +53,14 @@ const makeSut = (): SutTypes => {
 };
 
 describe('AddSurvey Controller', () => {
+  beforeAll(() => {
+    MockDate.set(new Date());
+  });
+
+  afterAll(() => {
+    MockDate.reset();
+  });
+
   test('Should call Validation with correct values', async () => {
     const { sut, validationStub } = makeSut();
     const validateSpy = jest.spyOn(validationStub, 'validate');
