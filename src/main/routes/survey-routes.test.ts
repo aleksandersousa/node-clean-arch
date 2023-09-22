@@ -38,7 +38,7 @@ describe('Survey Routes', () => {
     surveyCollection.deleteMany({});
 
     accountCollection = await MongoHelper.getCollection('accounts');
-    accountCollection.deleteMany({});
+    await accountCollection.deleteMany({});
   });
 
   describe('POST /surveys', () => {
