@@ -26,7 +26,7 @@ describe('Account Mongo Repository', () => {
 
   beforeEach(async () => {
     surveyCollection = await MongoHelper.getCollection('surveys');
-    surveyCollection.deleteMany({});
+    await surveyCollection.deleteMany({});
   });
 
   describe('add()', () => {
