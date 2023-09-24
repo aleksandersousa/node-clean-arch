@@ -1,7 +1,7 @@
-import { SignupController } from '../../../../../presentation/controllers';
-import { type Controller } from '../../../../../presentation/protocols';
-import { makeLogControllerDecorator } from '../../../decorators';
-import { makeDbAuthentication, makeDbAddAccount } from '../../../usecases';
+import { SignupController } from '@/presentation/controllers';
+import { type Controller } from '@/presentation/protocols';
+import { makeLogControllerDecorator } from '@/main/factories/decorators';
+import { makeDbAuthentication, makeDbAddAccount } from '@/main/factories/usecases';
 import { makeSignupValidation } from './signup-validation-factory';
 
 export const makeSignupController = (): Controller => {

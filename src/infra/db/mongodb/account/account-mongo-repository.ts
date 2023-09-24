@@ -4,10 +4,10 @@ import {
   type AddAccountRepository,
   type UpdateAccessTokenRepository,
   type LoadAccountByTokenRepository,
-} from '../../../../data/protocols';
-import { type AccountModel } from '../../../../domain/models';
-import { type AddAccountModel } from '../../../../domain/usecases';
-import { MongoHelper } from '../helpers/mongo-helper';
+} from '@/data/protocols';
+import { type AccountModel } from '@/domain/models';
+import { type AddAccountModel } from '@/domain/usecases';
+import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper';
 
 export class AccountMongoRepository
   implements

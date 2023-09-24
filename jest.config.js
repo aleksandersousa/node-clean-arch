@@ -27,7 +27,10 @@ const config = {
   // A map from regular expressions to paths to transformers
   transform: { '.+\\.ts$': 'ts-jest' },
   // preset for mongo db
-  preset: '@shelf/jest-mongodb'
+  preset: '@shelf/jest-mongodb',
+  moduleNameMapper: {
+    '@/(.*)': '<rootDir>/src/$1'
+  }
 };
 
 module.exports = config;

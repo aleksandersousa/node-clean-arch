@@ -1,5 +1,5 @@
-import { InvalidParamError } from '../../presentation/errors';
-import { type EmailValidator } from '../protocols';
+import { InvalidParamError } from '@/presentation/errors';
+import { type EmailValidator } from '@/validation/protocols';
 import { EmailValidation } from './email-validation';
 
 const makeEmailValidator = (): EmailValidator => {

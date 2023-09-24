@@ -1,4 +1,7 @@
 {
+  "include": [
+    "src"
+  ],
   "compilerOptions": {
     "outDir": "dist",
     "module": "CommonJS",
@@ -6,13 +9,12 @@
     "rootDir": "src",
     // "sourceMap": true,
     "esModuleInterop": true,
-    "strictNullChecks": true
-  },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "**/*.spec.ts",
-    "**/*.test.ts"
-  ],
+    "strictNullChecks": true,
+    "baseUrl": "src",
+    "paths": {
+      "@/*": [
+        "*"
+      ]
+    }
+  }
 }
