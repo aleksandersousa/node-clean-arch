@@ -20,6 +20,7 @@ module.exports = {
         '@typescript-eslint/strict-boolean-expressions': 'off',
         '@typescript-eslint/no-floating-promises': 'off',
         '@typescript-eslint/no-misused-promises': 'off',
+        '@typescript-eslint/consistent-type-definitions': 'off',
         'array-callback-return': 'off',
         'unused-imports/no-unused-imports-ts': 'error',
         'prettier/prettier': [
