@@ -83,4 +83,33 @@ describe('Account Mongo Repository', () => {
       expect(surveys.length).toBe(0);
     });
   });
+
+  describe('loadAll()', () => {
+    test('Should load survey by id on success', async () => {
+      const document = await surveyCollection.insertOne({
+        question: 'any_question',
+        answers: [
+          {
+            image: 'any_image',
+            answer: 'any_answer',
+          },
+        ],
+        date: new Date(),
+      });
+
+      const sut = makeSut();
+
+      const survey = await sut.loadById(document.insertedId.toHexString());
+
+      expect(survey).toBeTruthy();
+    });
+
+    // test('Should load empty list', async () => {
+    //   const sut = makeSut();
+
+    //   const surveys = await sut.loadAll();
+
+    //   expect(surveys.length).toBe(0);
+    // });
+  });
 });
