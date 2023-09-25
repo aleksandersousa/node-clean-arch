@@ -1,7 +1,7 @@
 import { type LoadSurveyById, type HttpRequest, type SurveyModel, forbidden, serverError, InvalidParamError } from '.';
 import { SaveSurveyResultController } from './save-survey-result-controller';
 
-const makeFakeRequest = (): HttpRequest => ({ params: { surveyId: 'any_id' } });
+const makeFakeRequest = (): HttpRequest => ({ params: { surveyId: 'any_id' }, body: { answer: 'any_answer' } });
 
 const makeFakeSurvey = (): SurveyModel => ({
   id: 'any_id',
@@ -67,5 +67,13 @@ describe('SaveSurveyResult Controller', () => {
     const httpResponse = await sut.handle(makeFakeRequest());
 
     expect(httpResponse).toEqual(serverError(new Error()));
+  });
+
+  test('Should return 403 if an invalid answer is provided', async () => {
+    const { sut } = makeSut();
+
+    const httpResponse = await sut.handle({ params: { surveyId: 'any_id' }, body: { answer: 'wrong_answer' } });
+
+    expect(httpResponse).toEqual(forbidden(new InvalidParamError('answer')));
   });
 });
