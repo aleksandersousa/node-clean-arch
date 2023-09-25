@@ -7,6 +7,7 @@ import {
   forbidden,
   serverError,
   type SaveSurveyResult,
+  ok,
 } from '.';
 
 export class SaveSurveyResultController implements Controller {
@@ -30,17 +31,17 @@ export class SaveSurveyResultController implements Controller {
           return forbidden(new InvalidParamError('answer'));
         }
 
-        await this.saveSurveyResult.save({
+        const surveyResult = await this.saveSurveyResult.save({
           accountId: accountId as string,
           surveyId,
           answer,
           date: new Date(),
         });
+
+        return ok(surveyResult);
       } else {
         return forbidden(new InvalidParamError('surveyId'));
       }
-
-      return { body: null, statusCode: 200 };
     } catch (error) {
       return serverError(error);
     }
