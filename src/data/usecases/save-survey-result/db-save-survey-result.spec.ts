@@ -19,7 +19,7 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
 
 const makeSaveSurveyResultRespository = (): SaveSurveyResultRepository => {
   class SaveSurveyResultRepositoryStub implements SaveSurveyResultRepository {
-    async save(_surveyResultData: SaveSurveyResultModel): Promise<SurveyResultModel> {
+    async save(_surveyResultData: SaveSurveyResultModel): Promise<SurveyResultModel | null> {
       return await new Promise(resolve => {
         resolve(makeFakeSurveyResult());
       });

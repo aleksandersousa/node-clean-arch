@@ -84,7 +84,7 @@ describe('Account Mongo Repository', () => {
     });
   });
 
-  describe('loadAll()', () => {
+  describe('loadById()', () => {
     test('Should load survey by id on success', async () => {
       const document = await surveyCollection.insertOne({
         question: 'any_question',
@@ -103,13 +103,5 @@ describe('Account Mongo Repository', () => {
 
       expect(survey).toBeTruthy();
     });
-
-    // test('Should load empty list', async () => {
-    //   const sut = makeSut();
-
-    //   const surveys = await sut.loadAll();
-
-    //   expect(surveys.length).toBe(0);
-    // });
   });
 });
