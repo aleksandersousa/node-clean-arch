@@ -1,15 +1,26 @@
-import { InvalidParamError, forbidden } from '@/presentation/middlewares/auth';
-import { type Controller, type HttpRequest, type HttpResponse, type LoadSurveyById } from '.';
+import {
+  type Controller,
+  type HttpRequest,
+  type HttpResponse,
+  type LoadSurveyById,
+  InvalidParamError,
+  forbidden,
+  serverError,
+} from '.';
 
 export class SaveSurveyResultController implements Controller {
   constructor(private readonly loadSurveyById: LoadSurveyById) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    const survey = await this.loadSurveyById.loadById(httpRequest.params.surveyId);
-    if (!survey) {
-      return forbidden(new InvalidParamError('surveyId'));
-    }
+    try {
+      const survey = await this.loadSurveyById.loadById(httpRequest.params.surveyId);
+      if (!survey) {
+        return forbidden(new InvalidParamError('surveyId'));
+      }
 
-    return { body: null, statusCode: 200 };
+      return { body: null, statusCode: 200 };
+    } catch (error) {
+      return serverError(error);
+    }
   }
 }
