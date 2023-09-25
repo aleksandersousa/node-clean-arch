@@ -2,12 +2,12 @@ import { type Collection } from 'mongodb';
 import request from 'supertest';
 import app from '@/main/config/app';
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper';
-import { type AddAccountModel } from '@/domain/usecases';
+import { type AddAccountParams } from '@/domain/usecases';
 import { hash } from 'bcrypt';
 
 let accountCollection: Collection;
 
-const makeFakeAddAccount = async (): Promise<AddAccountModel> => {
+const makeFakeAddAccount = async (): Promise<AddAccountParams> => {
   const password = await hash('any_password', 12);
   return {
     name: 'any_name',

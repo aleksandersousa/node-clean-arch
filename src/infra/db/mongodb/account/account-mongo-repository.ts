@@ -6,7 +6,7 @@ import {
   type LoadAccountByTokenRepository,
 } from '@/data/protocols';
 import { type AccountModel } from '@/domain/models';
-import { type AddAccountModel } from '@/domain/usecases';
+import { type AddAccountParams } from '@/domain/usecases';
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper';
 
 export class AccountMongoRepository
@@ -16,7 +16,7 @@ export class AccountMongoRepository
     UpdateAccessTokenRepository,
     LoadAccountByTokenRepository
 {
-  async add(accountData: AddAccountModel): Promise<AccountModel> {
+  async add(accountData: AddAccountParams): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts');
 
     const { value: document } = await accountCollection.findOneAndUpdate(

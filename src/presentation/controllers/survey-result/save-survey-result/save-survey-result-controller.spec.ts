@@ -6,7 +6,7 @@ import {
   serverError,
   InvalidParamError,
   type SaveSurveyResult,
-  type SaveSurveyResultModel,
+  type SaveSurveyResultParams,
   type SurveyResultModel,
   ok,
 } from '.';
@@ -19,7 +19,7 @@ const makeFakeRequest = (): HttpRequest => ({
   accountId: 'any_account_id',
 });
 
-const makeFakeSurveyResultData = (): SaveSurveyResultModel => ({
+const makeFakeSurveyResultData = (): SaveSurveyResultParams => ({
   surveyId: 'any_survey_id',
   accountId: 'any_account_id',
   answer: 'any_answer',
@@ -55,7 +55,7 @@ const makeLoadSurveyById = (): LoadSurveyById => {
 
 const makeSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
-    async save(data: SaveSurveyResultModel): Promise<SurveyResultModel | null> {
+    async save(data: SaveSurveyResultParams): Promise<SurveyResultModel | null> {
       return await new Promise(resolve => {
         resolve(makeFakeSurveyResult());
       });
