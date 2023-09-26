@@ -19,7 +19,7 @@ export class AccountMongoRepository
   async add(accountData: AddAccountParams): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts');
 
-    const { value: document } = await accountCollection.findOneAndUpdate(
+    const document = await accountCollection.findOneAndUpdate(
       { _id: new ObjectId() },
       { $setOnInsert: accountData },
       { upsert: true, returnDocument: 'after' },
