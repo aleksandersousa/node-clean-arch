@@ -2,7 +2,7 @@ import { mockLoadSurveysRepository } from '@/data/test';
 import { type LoadSurveysRepository, type LoadSurveys } from '.';
 import { DbLoadSurveys } from './db-load-surveys';
 import MockDate from 'mockdate';
-import { mockSurveyModels } from '@/domain/test';
+import { mockSurveyModels, throwError } from '@/domain/test';
 
 type SutTypes = {
   sut: LoadSurveys;
@@ -45,11 +45,7 @@ describe('DbLoadSurveys', () => {
   test('Should throw if LoadSurveysRepository throws', async () => {
     const { sut, loadSurveysRepositoryStub } = makeSut();
 
-    jest.spyOn(loadSurveysRepositoryStub, 'loadAll').mockReturnValueOnce(
-      new Promise((_resolve, reject) => {
-        reject(new Error());
-      }),
-    );
+    jest.spyOn(loadSurveysRepositoryStub, 'loadAll').mockImplementationOnce(throwError);
 
     const promise = sut.load();
 

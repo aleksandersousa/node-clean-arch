@@ -10,7 +10,7 @@ import {
 } from '.';
 import { SaveSurveyResultController } from './save-survey-result-controller';
 import MockDate from 'mockdate';
-import { mockSaveSurveyResultParams, mockSurveyResultModel } from '@/domain/test';
+import { mockSaveSurveyResultParams, mockSurveyResultModel, throwError } from '@/domain/test';
 
 const makeFakeRequest = (): HttpRequest => ({
   params: { surveyId: 'any_survey_id' },
@@ -52,11 +52,7 @@ describe('SaveSurveyResult Controller', () => {
 
   test('Should return 403 LoadSurveyById returns null', async () => {
     const { sut, loadSurveyByIdStub } = makeSut();
-    jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(
-      new Promise(resolve => {
-        resolve(null);
-      }),
-    );
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(Promise.resolve(null));
 
     const httpResponse = await sut.handle(makeFakeRequest());
 
@@ -65,11 +61,8 @@ describe('SaveSurveyResult Controller', () => {
 
   test('Should return 500 if LoadSurveyById throws', async () => {
     const { sut, loadSurveyByIdStub } = makeSut();
-    jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(
-      new Promise((_resolve, reject) => {
-        reject(new Error());
-      }),
-    );
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockImplementationOnce(throwError);
+
     const httpResponse = await sut.handle(makeFakeRequest());
 
     expect(httpResponse).toEqual(serverError(new Error()));
@@ -94,11 +87,8 @@ describe('SaveSurveyResult Controller', () => {
 
   test('Should return 500 if SaveSurveyResult throws', async () => {
     const { sut, saveSurveyResultStub } = makeSut();
-    jest.spyOn(saveSurveyResultStub, 'save').mockReturnValueOnce(
-      new Promise((_resolve, reject) => {
-        reject(new Error());
-      }),
-    );
+    jest.spyOn(saveSurveyResultStub, 'save').mockImplementationOnce(throwError);
+
     const httpResponse = await sut.handle(makeFakeRequest());
 
     expect(httpResponse).toEqual(serverError(new Error()));

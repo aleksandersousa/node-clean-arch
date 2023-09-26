@@ -4,6 +4,7 @@ import { badRequest, noContent, serverError } from '@/presentation/helpers/http/
 import { AddSurveyController } from './add-survey-controller';
 import MockDate from 'mockdate';
 import { mockAddSurvey, mockValidation } from '@/presentation/test';
+import { throwError } from '@/domain/test';
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {
@@ -72,11 +73,7 @@ describe('AddSurvey Controller', () => {
 
   test('Should return 500 if AddSurvey throws', async () => {
     const { sut, addSurveyStub } = makeSut();
-    jest.spyOn(addSurveyStub, 'add').mockReturnValueOnce(
-      new Promise((_resolve, reject) => {
-        reject(new Error());
-      }),
-    );
+    jest.spyOn(addSurveyStub, 'add').mockImplementationOnce(throwError);
     const httpResponse = await sut.handle(makeFakeRequest());
 
     expect(httpResponse).toEqual(serverError(new Error()));
