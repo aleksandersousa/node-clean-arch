@@ -1,13 +1,7 @@
 import { type Collection } from 'mongodb';
-import { type AddSurveyParams } from '@/domain/usecases';
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper';
 import { SurveyMongoRepository } from './survey-mongo-repository';
-
-const makeFakeSurveyData = (): AddSurveyParams => ({
-  question: 'any_question',
-  answers: [{ image: 'any_image', answer: 'any_answer' }, { answer: 'other_answer' }],
-  date: new Date(),
-});
+import { mockAddSurveyParams } from '@/domain/test';
 
 const makeSut = (): SurveyMongoRepository => {
   return new SurveyMongoRepository();
@@ -33,7 +27,7 @@ describe('Account Mongo Repository', () => {
     test('Should add a survey on success', async () => {
       const sut = makeSut();
 
-      await sut.add(makeFakeSurveyData());
+      await sut.add(mockAddSurveyParams());
 
       const survey = await surveyCollection.findOne({ question: 'any_question' });
 

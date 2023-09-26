@@ -1,13 +1,7 @@
 import { type Collection } from 'mongodb';
-import { type AddAccountParams } from '@/domain/usecases';
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper';
 import { AccountMongoRepository } from './account-mongo-repository';
-
-const makeFakeAddAccount = (): AddAccountParams => ({
-  name: 'any_name',
-  email: 'any_email@email.com',
-  password: 'any_password',
-});
+import { mockAddAccountParams } from '@/domain/test';
 
 const makeSut = (): AccountMongoRepository => {
   return new AccountMongoRepository();
@@ -32,7 +26,7 @@ describe('Account Mongo Repository', () => {
   describe('add()', () => {
     test('Should return an account on add success', async () => {
       const sut = makeSut();
-      const account = await sut.add(makeFakeAddAccount());
+      const account = await sut.add(mockAddAccountParams());
 
       expect(account).toBeTruthy();
       expect(account.id).toBeTruthy();
@@ -45,7 +39,7 @@ describe('Account Mongo Repository', () => {
   describe('loadByEmail()', () => {
     test('Should return an account on loadByEmail success', async () => {
       const sut = makeSut();
-      await accountCollection.insertOne(makeFakeAddAccount());
+      await accountCollection.insertOne(mockAddAccountParams());
 
       const account = await sut.loadByEmail('any_email@email.com');
 
@@ -68,7 +62,7 @@ describe('Account Mongo Repository', () => {
   describe('updateAccessToken()', () => {
     test('Should update the account accessToken on updateAccessToken success', async () => {
       const sut = makeSut();
-      const document = await accountCollection.insertOne(makeFakeAddAccount());
+      const document = await accountCollection.insertOne(mockAddAccountParams());
       let account = await accountCollection.findOne({ _id: document.insertedId });
 
       expect(account?.accessToken).toBeFalsy();

@@ -1,3 +1,3 @@
-export interface LogErrorRespository {
+export interface LogErrorRepository {
   logError: (stack: string) => Promise<void>;
 }

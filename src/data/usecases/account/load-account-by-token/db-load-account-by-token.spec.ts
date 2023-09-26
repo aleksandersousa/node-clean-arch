@@ -1,36 +1,7 @@
-import { type LoadAccountByToken, type Decrypter, type AccountModel, type LoadAccountByTokenRepository } from '.';
+import { mockDecrypter, mockLoadAccountByTokenRepository } from '@/data/test';
+import { type LoadAccountByToken, type Decrypter, type LoadAccountByTokenRepository } from '.';
 import { DbLoadAccountByToken } from './db-load-account-by-token';
-
-const makeFakeAccount = (): AccountModel => ({
-  id: 'valid_id',
-  name: 'valid_name',
-  email: 'valid_email@email.com',
-  password: 'valid_password',
-});
-
-const makeDecrypter = (): Decrypter => {
-  class DecrypterStub implements Decrypter {
-    async decrypt(value: string): Promise<string | null> {
-      return await new Promise(resolve => {
-        resolve('any_token');
-      });
-    }
-  }
-
-  return new DecrypterStub();
-};
-
-const makeLoadAccountByTokenRepository = (): LoadAccountByTokenRepository => {
-  class LoadAccountByTokenRepositoryStub implements LoadAccountByTokenRepository {
-    async loadByToken(token: string, role?: string): Promise<AccountModel | null> {
-      return await new Promise(resolve => {
-        resolve(makeFakeAccount());
-      });
-    }
-  }
-
-  return new LoadAccountByTokenRepositoryStub();
-};
+import { mockAccountModel } from '@/domain/test';
 
 type SutTypes = {
   sut: LoadAccountByToken;
@@ -39,8 +10,8 @@ type SutTypes = {
 };
 
 const makeSut = (): SutTypes => {
-  const decrypterStub = makeDecrypter();
-  const loadAccountByTokenRepositoryStub = makeLoadAccountByTokenRepository();
+  const decrypterStub = mockDecrypter();
+  const loadAccountByTokenRepositoryStub = mockLoadAccountByTokenRepository();
   const sut = new DbLoadAccountByToken(decrypterStub, loadAccountByTokenRepositoryStub);
 
   return { sut, decrypterStub, loadAccountByTokenRepositoryStub };
@@ -124,6 +95,6 @@ describe('DbLoadAccountByToken Usecase', () => {
 
     const account = await sut.load('any_token', 'any_role');
 
-    expect(account).toEqual(makeFakeAccount());
+    expect(account).toEqual(mockAccountModel());
   });
 });
