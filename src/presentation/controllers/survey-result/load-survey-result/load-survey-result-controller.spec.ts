@@ -2,21 +2,25 @@ import { type LoadSurveyById, type HttpRequest, forbidden, InvalidParamError, se
 import { mockLoadSurveyById } from '@/presentation/test';
 import { LoadSurveyResultController } from './load-survey-result-controller';
 import { throwError } from '@/domain/test';
+import { type LoadSurveyResultRepository } from '@/data/protocols';
+import { mockLoadSurveyResultRepository } from '@/data/test';
 
 const makeFakeRequest = (): HttpRequest => ({
-  params: { surveyId: 'any_survey_id' },
+  params: { surveyId: 'any_id' },
 });
 
 type SutTypes = {
   sut: LoadSurveyResultController;
   loadSurveyByIdStub: LoadSurveyById;
+  loadSurveyResultRepositoryStub: LoadSurveyResultRepository;
 };
 
 const makeSut = (): SutTypes => {
   const loadSurveyByIdStub = mockLoadSurveyById();
-  const sut = new LoadSurveyResultController(loadSurveyByIdStub);
+  const loadSurveyResultRepositoryStub = mockLoadSurveyResultRepository();
+  const sut = new LoadSurveyResultController(loadSurveyByIdStub, loadSurveyResultRepositoryStub);
 
-  return { sut, loadSurveyByIdStub };
+  return { sut, loadSurveyByIdStub, loadSurveyResultRepositoryStub };
 };
 
 describe('LoadSurveyResult Controller', () => {
@@ -26,7 +30,16 @@ describe('LoadSurveyResult Controller', () => {
 
     await sut.handle(makeFakeRequest());
 
-    expect(loadByIdSpy).toHaveBeenCalledWith('any_survey_id');
+    expect(loadByIdSpy).toHaveBeenCalledWith('any_id');
+  });
+
+  test('Should call LoadSurveyResultRepository with correct values', async () => {
+    const { sut, loadSurveyResultRepositoryStub } = makeSut();
+    const loadBySurveyIdSpy = jest.spyOn(loadSurveyResultRepositoryStub, 'loadBySurveyId');
+
+    await sut.handle(makeFakeRequest());
+
+    expect(loadBySurveyIdSpy).toHaveBeenCalledWith('any_id');
   });
 
   test('Should return 403 if LoadSurveyById returns null', async () => {

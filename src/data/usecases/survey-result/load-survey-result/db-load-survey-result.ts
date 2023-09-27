@@ -8,12 +8,12 @@ import {
 
 export class DbLoadSurveyResult implements LoadSurveyResult {
   constructor(
-    private readonly loadSurveyResultRepositoryStub: LoadSurveyResultRepository,
+    private readonly loadSurveyResultRepository: LoadSurveyResultRepository,
     private readonly loadSurveyByIdRepository: LoadSurveyByIdRepository,
   ) {}
 
   async load(surveyId: string): Promise<SurveyResultModel | null> {
-    let surveyResult = await this.loadSurveyResultRepositoryStub.loadBySurveyId(surveyId);
+    let surveyResult = await this.loadSurveyResultRepository.loadBySurveyId(surveyId);
     if (!surveyResult) {
       const survey = await this.loadSurveyByIdRepository.loadById(surveyId);
 

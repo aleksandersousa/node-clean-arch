@@ -1,3 +1,4 @@
+import { type LoadSurveyResultRepository } from '@/data/protocols';
 import {
   type Controller,
   type HttpRequest,
@@ -10,7 +11,10 @@ import {
 } from '.';
 
 export class LoadSurveyResultController implements Controller {
-  constructor(private readonly loadSurveyById: LoadSurveyById) {}
+  constructor(
+    private readonly loadSurveyById: LoadSurveyById,
+    private readonly loadSurveyResultRepository: LoadSurveyResultRepository,
+  ) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
@@ -20,6 +24,8 @@ export class LoadSurveyResultController implements Controller {
       if (!survey) {
         return forbidden(new InvalidParamError('surveyId'));
       }
+
+      await this.loadSurveyResultRepository.loadBySurveyId(survey.id);
 
       return ok(null);
     } catch (error) {
