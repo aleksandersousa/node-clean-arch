@@ -182,7 +182,7 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository, 
       .build();
 
     const surveyResult = await surveyResultsCollection.aggregate(query).toArray();
-    return surveyResult?.length ? this.mapSurveyResult(surveyResult[0]) : null;
+    return surveyResult.length ? this.mapSurveyResult(surveyResult[0]) : null;
   }
 
   private readonly mapSurveyResult = (surveyResult: Document): SurveyResultModel => {

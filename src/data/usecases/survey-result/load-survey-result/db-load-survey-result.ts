@@ -1,7 +1,6 @@
 import {
   type LoadSurveyResult,
   type SurveyResultModel,
-  type SurveyResultAnswerModel,
   type LoadSurveyResultRepository,
   type LoadSurveyByIdRepository,
 } from '.';
@@ -18,10 +17,10 @@ export class DbLoadSurveyResult implements LoadSurveyResult {
       const survey = await this.loadSurveyByIdRepository.loadById(surveyId);
 
       surveyResult = {
-        surveyId: survey?.id as string,
-        question: survey?.question as string,
-        date: survey?.date as Date,
-        answers: survey?.answers?.map(a => ({ ...a, count: 0, percent: 0 })) as SurveyResultAnswerModel[],
+        surveyId: survey.id,
+        question: survey.question,
+        date: survey.date,
+        answers: survey.answers.map(a => ({ ...a, count: 0, percent: 0 })),
       };
     }
 
