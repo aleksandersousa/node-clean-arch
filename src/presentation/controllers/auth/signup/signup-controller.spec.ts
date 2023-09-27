@@ -4,7 +4,7 @@ import { SignupController } from './signup-controller';
 import { type AddAccount, type Validation, type Authentication, type HttpRequest } from '.';
 import { mockAddAccount, mockAuthentication, mockValidation } from '@/presentation/test';
 
-const makeFakeRequest = (): HttpRequest => ({
+const mockRequest = (): HttpRequest => ({
   body: {
     name: 'any_name',
     email: 'any_email@mail.com',
@@ -39,7 +39,7 @@ describe('Signup Controller', () => {
       });
     });
 
-    const httpResponse = await sut.handle(makeFakeRequest());
+    const httpResponse = await sut.handle(mockRequest());
 
     expect(httpResponse).toEqual(serverError(new Error()));
   });
@@ -51,7 +51,7 @@ describe('Signup Controller', () => {
       throw new Error();
     });
 
-    await sut.handle(makeFakeRequest());
+    await sut.handle(mockRequest());
 
     expect(addSpy).toHaveBeenCalledWith({
       name: 'any_name',
@@ -63,7 +63,7 @@ describe('Signup Controller', () => {
   test('Should return 200 if valid data is provided', async () => {
     const { sut } = makeSut();
 
-    const httpResponse = await sut.handle(makeFakeRequest());
+    const httpResponse = await sut.handle(mockRequest());
 
     expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }));
   });
@@ -76,7 +76,7 @@ describe('Signup Controller', () => {
       }),
     );
 
-    const httpResponse = await sut.handle(makeFakeRequest());
+    const httpResponse = await sut.handle(mockRequest());
 
     expect(httpResponse).toEqual(forbidden(new EmailInUseError()));
   });
@@ -87,7 +87,7 @@ describe('Signup Controller', () => {
     const validateSpy = jest.spyOn(validationStub, 'validate').mockImplementationOnce(() => {
       throw new Error();
     });
-    const httpRequest = makeFakeRequest();
+    const httpRequest = mockRequest();
 
     await sut.handle(httpRequest);
 
@@ -98,7 +98,7 @@ describe('Signup Controller', () => {
     const { sut, validationStub } = makeSut();
     jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissingParamError('any_field'));
 
-    const httpResponse = await sut.handle(makeFakeRequest());
+    const httpResponse = await sut.handle(mockRequest());
 
     expect(httpResponse).toEqual(badRequest(new MissingParamError('any_field')));
   });
@@ -107,7 +107,7 @@ describe('Signup Controller', () => {
     const { sut, authenticationStub } = makeSut();
     const authSpy = jest.spyOn(authenticationStub, 'auth');
 
-    await sut.handle(makeFakeRequest());
+    await sut.handle(mockRequest());
     expect(authSpy).toHaveBeenCalledWith({ email: 'any_email@mail.com', password: 'any_password' });
   });
 
@@ -120,7 +120,7 @@ describe('Signup Controller', () => {
       }),
     );
 
-    const httpResponse = await sut.handle(makeFakeRequest());
+    const httpResponse = await sut.handle(mockRequest());
 
     expect(httpResponse).toEqual(serverError(new Error()));
   });

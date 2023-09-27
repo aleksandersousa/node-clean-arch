@@ -7,7 +7,7 @@ import { hash } from 'bcrypt';
 
 let accountCollection: Collection;
 
-const makeFakeAddAccount = async (): Promise<AddAccountParams> => {
+const mockAddAccount = async (): Promise<AddAccountParams> => {
   const password = await hash('any_password', 12);
   return {
     name: 'any_name',
@@ -41,7 +41,7 @@ describe('Auth Routes', () => {
 
   describe('POST /login', () => {
     test('Should return 200 on login', async () => {
-      await accountCollection.insertOne(await makeFakeAddAccount());
+      await accountCollection.insertOne(await mockAddAccount());
 
       await request(app)
         .post('/api/login')
