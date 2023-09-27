@@ -1,6 +1,7 @@
-import { type LoadSurveyById, type HttpRequest, forbidden, InvalidParamError } from '.';
+import { type LoadSurveyById, type HttpRequest, forbidden, InvalidParamError, serverError } from '.';
 import { mockLoadSurveyById } from '@/presentation/test';
 import { LoadSurveyResultController } from './load-survey-result-controller';
+import { throwError } from '@/domain/test';
 
 const makeFakeRequest = (): HttpRequest => ({
   params: { surveyId: 'any_survey_id' },
@@ -35,5 +36,14 @@ describe('LoadSurveyResult Controller', () => {
     const httpResponse = await sut.handle(makeFakeRequest());
 
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('surveyId')));
+  });
+
+  test('Should return 500 if LoadSurveyById throws', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut();
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockImplementationOnce(throwError);
+
+    const httpResponse = await sut.handle(makeFakeRequest());
+
+    expect(httpResponse).toEqual(serverError(new Error()));
   });
 });
