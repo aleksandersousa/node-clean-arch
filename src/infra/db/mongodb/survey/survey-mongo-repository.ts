@@ -1,7 +1,7 @@
 import { type LoadSurveysRepository, type AddSurveyRepository } from '@/data/protocols';
 import { type SurveyModel } from '@/domain/models';
 import { type LoadSurveyById, type AddSurveyParams } from '@/domain/usecases';
-import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper';
+import { MongoHelper } from '@/infra/db/mongodb/helpers';
 import { ObjectId } from 'mongodb';
 
 export class SurveyMongoRepository implements AddSurveyRepository, LoadSurveysRepository, LoadSurveyById {

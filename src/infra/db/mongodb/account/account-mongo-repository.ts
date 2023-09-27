@@ -7,7 +7,7 @@ import {
 } from '@/data/protocols';
 import { type AccountModel } from '@/domain/models';
 import { type AddAccountParams } from '@/domain/usecases';
-import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper';
+import { MongoHelper } from '@/infra/db/mongodb/helpers';
 
 export class AccountMongoRepository
   implements

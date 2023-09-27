@@ -1,5 +1,5 @@
 import { ObjectId, type Collection } from 'mongodb';
-import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper';
+import { MongoHelper } from '@/infra/db/mongodb/helpers';
 import { SurveyResultMongoRepository } from './survey-result-mongo-repository';
 import { type AccountModel, type SurveyModel } from '@/domain/models';
 
