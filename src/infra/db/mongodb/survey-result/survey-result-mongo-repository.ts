@@ -1,10 +1,10 @@
-import { type SaveSurveyResultRepository } from '@/data/protocols';
+import { type LoadSurveyResultRepository, type SaveSurveyResultRepository } from '@/data/protocols';
 import { type SurveyResultModel } from '@/domain/models';
 import { type SaveSurveyResultParams } from '@/domain/usecases';
 import { MongoHelper, QueryBuilder } from '../helpers';
-import { type Collection, ObjectId, type Document } from 'mongodb';
+import { ObjectId, type Document } from 'mongodb';
 
-export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
+export class SurveyResultMongoRepository implements SaveSurveyResultRepository, LoadSurveyResultRepository {
   async save(data: SaveSurveyResultParams): Promise<SurveyResultModel | null> {
     const surveyResultsCollection = await MongoHelper.getCollection('surveyResults');
 
@@ -19,14 +19,12 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
       { upsert: true },
     );
 
-    const surveyResult = await this.loadBySurveyId(data.surveyId, surveyResultsCollection);
+    const surveyResult = await this.loadBySurveyId(data.surveyId);
     return surveyResult;
   }
 
-  private async loadBySurveyId(
-    surveyId: string,
-    surveyResultsCollection: Collection,
-  ): Promise<SurveyResultModel | null> {
+  async loadBySurveyId(surveyId: string): Promise<SurveyResultModel | null> {
+    const surveyResultsCollection = await MongoHelper.getCollection('surveyResults');
     const query = new QueryBuilder()
       .match({
         surveyId: new ObjectId(surveyId),
