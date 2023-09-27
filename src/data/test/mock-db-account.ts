@@ -11,9 +11,7 @@ import { mockAccountModel } from '@/domain/test';
 export const mockAddAccountRepository = (): AddAccountRepository => {
   class AddAccountRepositoryStub implements AddAccountRepository {
     async add(_accountData: AddAccountParams): Promise<AccountModel> {
-      return await new Promise(resolve => {
-        resolve(mockAccountModel());
-      });
+      return await Promise.resolve(mockAccountModel());
     }
   }
   return new AddAccountRepositoryStub();
@@ -22,9 +20,7 @@ export const mockAddAccountRepository = (): AddAccountRepository => {
 export const mockLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
   class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
     async loadByEmail(_email: string): Promise<AccountModel> {
-      return await new Promise(resolve => {
-        resolve(mockAccountModel());
-      });
+      return await Promise.resolve(mockAccountModel());
     }
   }
   return new LoadAccountByEmailRepositoryStub();
@@ -33,9 +29,7 @@ export const mockLoadAccountByEmailRepository = (): LoadAccountByEmailRepository
 export const mockLoadAccountByTokenRepository = (): LoadAccountByTokenRepository => {
   class LoadAccountByTokenRepositoryStub implements LoadAccountByTokenRepository {
     async loadByToken(_token: string, _role?: string): Promise<AccountModel> {
-      return await new Promise(resolve => {
-        resolve(mockAccountModel());
-      });
+      return await Promise.resolve(mockAccountModel());
     }
   }
   return new LoadAccountByTokenRepositoryStub();
@@ -44,9 +38,7 @@ export const mockLoadAccountByTokenRepository = (): LoadAccountByTokenRepository
 export const mockUpdateAccessTokenRepository = (): UpdateAccessTokenRepository => {
   class UpdateAccessTokenRepositoryStub implements UpdateAccessTokenRepository {
     async updateAccessToken(_id: string, _token: string): Promise<void> {
-      await new Promise<void>(resolve => {
-        resolve();
-      });
+      await Promise.resolve();
     }
   }
   return new UpdateAccessTokenRepositoryStub();

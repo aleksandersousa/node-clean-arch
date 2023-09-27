@@ -3,9 +3,7 @@ import { type Hasher, type HashComparer, type Encrypter, type Decrypter } from '
 export const mockHasher = (): Hasher => {
   class HasherStub implements Hasher {
     async hash(_value: string): Promise<string> {
-      return await new Promise(resolve => {
-        resolve('hashed_password');
-      });
+      return await Promise.resolve('hashed_password');
     }
   }
   return new HasherStub();
@@ -14,9 +12,7 @@ export const mockHasher = (): Hasher => {
 export const mockDecrypter = (): Decrypter => {
   class DecrypterStub implements Decrypter {
     async decrypt(_token: string): Promise<string> {
-      return await new Promise(resolve => {
-        resolve('any_value');
-      });
+      return await Promise.resolve('any_value');
     }
   }
   return new DecrypterStub();
@@ -25,9 +21,7 @@ export const mockDecrypter = (): Decrypter => {
 export const mockEncrypter = (): Encrypter => {
   class EncrypterStub implements Encrypter {
     async encrypt(_value: string): Promise<string> {
-      return await new Promise(resolve => {
-        resolve('any_token');
-      });
+      return await Promise.resolve('any_token');
     }
   }
   return new EncrypterStub();
@@ -36,9 +30,7 @@ export const mockEncrypter = (): Encrypter => {
 export const mockHashComparer = (): HashComparer => {
   class HashComparerStub implements HashComparer {
     async compare(_value: string, hash: string): Promise<boolean> {
-      return await new Promise(resolve => {
-        resolve(true);
-      });
+      return await Promise.resolve(true);
     }
   }
   return new HashComparerStub();
