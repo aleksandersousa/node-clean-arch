@@ -75,9 +75,9 @@ describe('LoadSurveyResult Controller', () => {
     expect(httpResponse).toEqual(serverError(new Error()));
   });
 
-  test('Should return 500 if LoadSurveyResultRepository throws', async () => {
-    const { sut, loadSurveyByIdStub } = makeSut();
-    jest.spyOn(loadSurveyByIdStub, 'loadById').mockImplementationOnce(throwError);
+  test('Should return 500 if LoadSurveyResult throws', async () => {
+    const { sut, loadSurveyResultStub } = makeSut();
+    jest.spyOn(loadSurveyResultStub, 'load').mockImplementationOnce(throwError);
 
     const httpResponse = await sut.handle(makeFakeRequest());
 
