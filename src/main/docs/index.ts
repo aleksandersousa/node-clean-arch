@@ -1,10 +1,11 @@
 import { badRequest, forbidden, serverError, unauthorized } from './components';
-import { loginPath, surveysPath } from './paths';
+import { loginPath, signupPath, surveysPath } from './paths';
 import {
   accountSchema,
   apiKeyAuthSchema,
   errorSchema,
   loginParamsSchema,
+  signupParamsSchema,
   surveyAnswerSchema,
   surveySchema,
   surveysSchema,
@@ -20,16 +21,18 @@ export default {
 
   servers: [{ url: '/api' }],
 
-  tags: [{ name: 'Login' }, { name: 'Enquete' }],
+  tags: [{ name: 'Autenticação' }, { name: 'Enquetes' }],
 
   paths: {
     '/login': loginPath,
+    '/signup': signupPath,
     '/surveys': surveysPath,
   },
 
   schemas: {
     account: accountSchema,
     loginParams: loginParamsSchema,
+    signupParams: signupParamsSchema,
     error: errorSchema,
     surveys: surveysSchema,
     survey: surveySchema,

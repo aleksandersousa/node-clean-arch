@@ -2,7 +2,7 @@ export const surveysPath = {
   get: {
     security: [{ apiKeyAuth: [] }],
 
-    tags: ['Enquete'],
+    tags: ['Enquetes'],
     summary: 'Api para listar todas as enquetes',
     responses: {
       200: {
