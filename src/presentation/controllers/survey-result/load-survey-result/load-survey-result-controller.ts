@@ -1,4 +1,3 @@
-import { type LoadSurveyResultRepository } from '@/data/protocols';
 import {
   type Controller,
   type HttpRequest,
@@ -8,12 +7,13 @@ import {
   forbidden,
   InvalidParamError,
   serverError,
+  type LoadSurveyResult,
 } from '.';
 
 export class LoadSurveyResultController implements Controller {
   constructor(
     private readonly loadSurveyById: LoadSurveyById,
-    private readonly loadSurveyResultRepository: LoadSurveyResultRepository,
+    private readonly loadSurveyResult: LoadSurveyResult,
   ) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -25,7 +25,7 @@ export class LoadSurveyResultController implements Controller {
         return forbidden(new InvalidParamError('surveyId'));
       }
 
-      const surveyResult = await this.loadSurveyResultRepository.loadBySurveyId(survey.id);
+      const surveyResult = await this.loadSurveyResult.load(survey.id);
 
       return ok(surveyResult);
     } catch (error) {

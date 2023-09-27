@@ -1,4 +1,4 @@
-import { type SaveSurveyResult, type SaveSurveyResultParams } from '@/domain/usecases';
+import { type LoadSurveyResult, type SaveSurveyResult, type SaveSurveyResultParams } from '@/domain/usecases';
 import { type SurveyResultModel } from '@/domain/models';
 import { mockSurveyResultModel } from '@/domain/test';
 
@@ -9,4 +9,13 @@ export const mockSaveSurveyResult = (): SaveSurveyResult => {
     }
   }
   return new SaveSurveyResultStub();
+};
+
+export const mockLoadSurveyResult = (): LoadSurveyResult => {
+  class LoadSurveyResultStub implements LoadSurveyResult {
+    async load(surveyId: string): Promise<SurveyResultModel | null> {
+      return await Promise.resolve(mockSurveyResultModel());
+    }
+  }
+  return new LoadSurveyResultStub();
 };
