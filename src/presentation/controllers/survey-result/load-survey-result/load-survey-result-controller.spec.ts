@@ -1,10 +1,9 @@
-import { type LoadSurveyById, type HttpRequest } from '.';
+import { type LoadSurveyById, type HttpRequest, forbidden, InvalidParamError } from '.';
 import { mockLoadSurveyById } from '@/presentation/test';
 import { LoadSurveyResultController } from './load-survey-result-controller';
 
 const makeFakeRequest = (): HttpRequest => ({
   params: { surveyId: 'any_survey_id' },
-  accountId: 'any_account_id',
 });
 
 type SutTypes = {
@@ -27,5 +26,14 @@ describe('LoadSurveyResult Controller', () => {
     await sut.handle(makeFakeRequest());
 
     expect(loadByIdSpy).toHaveBeenCalledWith('any_survey_id');
+  });
+
+  test('Should return 403 if LoadSurveyById returns null', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut();
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(Promise.resolve(null));
+
+    const httpResponse = await sut.handle(makeFakeRequest());
+
+    expect(httpResponse).toEqual(forbidden(new InvalidParamError('surveyId')));
   });
 });
