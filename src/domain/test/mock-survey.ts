@@ -10,6 +10,10 @@ export const mockSurveyModel = (): SurveyModel => {
         image: 'any_image',
         answer: 'any_answer',
       },
+      {
+        image: 'any_image',
+        answer: 'any_answer',
+      },
     ],
     date: new Date(),
   };

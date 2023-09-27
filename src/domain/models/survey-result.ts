@@ -1,4 +1,4 @@
-type SurveyResultAnswerModel = {
+export type SurveyResultAnswerModel = {
   image?: string;
   answer: string;
   count: number;
