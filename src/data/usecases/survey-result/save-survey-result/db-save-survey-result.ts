@@ -3,13 +3,18 @@ import {
   type SaveSurveyResultRepository,
   type SurveyResultModel,
   type SaveSurveyResultParams,
+  type LoadSurveyResultRepository,
 } from '.';
 
 export class DbSaveSurveyResult implements SaveSurveyResult {
-  constructor(private readonly saveSurveyResultRepository: SaveSurveyResultRepository) {}
+  constructor(
+    private readonly saveSurveyResultRepository: SaveSurveyResultRepository,
+    private readonly loadSurveyResultRepositoryStub: LoadSurveyResultRepository,
+  ) {}
 
   async save(data: SaveSurveyResultParams): Promise<SurveyResultModel | null> {
-    const surveyResult = await this.saveSurveyResultRepository.save(data);
+    await this.saveSurveyResultRepository.save(data);
+    const surveyResult = await this.loadSurveyResultRepositoryStub.loadBySurveyId(data.surveyId);
     return surveyResult;
   }
 }

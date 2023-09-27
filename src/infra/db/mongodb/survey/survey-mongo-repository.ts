@@ -15,7 +15,7 @@ export class SurveyMongoRepository implements AddSurveyRepository, LoadSurveysRe
     const surveyCollection = await MongoHelper.getCollection('surveys');
     const surveys = await surveyCollection.find().toArray();
 
-    return surveys.map(survey => MongoHelper.parseDocument<SurveyModel>(survey)) as SurveyModel[];
+    return MongoHelper.parseDocuments<SurveyModel>(surveys) as SurveyModel[];
   }
 
   async loadById(id: string): Promise<SurveyModel | null> {

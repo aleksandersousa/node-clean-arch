@@ -30,4 +30,14 @@ export const MongoHelper = {
     const { _id, ...account } = { ...collection, id: collection._id.toHexString() };
     return account as T;
   },
+
+  parseDocuments<T>(collection: Array<WithId<Document>> | null): T[] | null {
+    if (!collection) {
+      return null;
+    }
+
+    const mappedCollection = collection.map(c => MongoHelper.parseDocument<T>(c)) as T[];
+
+    return mappedCollection;
+  },
 };

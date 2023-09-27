@@ -62,20 +62,19 @@ describe('Account Mongo Repository', () => {
       const survey = await makeSurvey();
       const account = await makeAccount();
 
-      const surveyResult = await sut.save({
+      await sut.save({
         surveyId: survey?.id as string,
         accountId: account?.id as string,
         answer: survey?.answers[0]?.answer as string,
         date: new Date(),
       });
 
-      expect(surveyResult).toBeTruthy();
-      expect(surveyResult?.surveyId).toBe(survey?.id);
-      expect(surveyResult?.answers[0].answer).toBe(survey?.answers[0]?.answer);
-      expect(surveyResult?.answers[0].count).toBe(1);
-      expect(surveyResult?.answers[0].percent).toBe(100);
-      expect(surveyResult?.answers[1].count).toBe(0);
-      expect(surveyResult?.answers[1].percent).toBe(0);
+      const document = await surveyResultCollection.findOne({
+        surveyId: new ObjectId(survey?.id as string),
+        accountId: new ObjectId(account?.id as string),
+      });
+
+      expect(document).toBeTruthy();
     });
 
     test('Should update a survey result if its not new', async () => {
@@ -90,20 +89,22 @@ describe('Account Mongo Repository', () => {
         date: new Date(),
       });
 
-      const surveyResult = await sut.save({
+      await sut.save({
         surveyId: survey?.id as string,
         accountId: account?.id as string,
         answer: survey?.answers[1]?.answer as string,
         date: new Date(),
       });
 
-      expect(surveyResult).toBeTruthy();
-      expect(surveyResult?.surveyId).toBe(survey?.id);
-      expect(surveyResult?.answers[0].answer).toBe(survey?.answers[1]?.answer);
-      expect(surveyResult?.answers[0].count).toBe(1);
-      expect(surveyResult?.answers[0].percent).toBe(100);
-      expect(surveyResult?.answers[1].count).toBe(0);
-      expect(surveyResult?.answers[1].percent).toBe(0);
+      const documents = await surveyResultCollection
+        .find({
+          surveyId: new ObjectId(survey?.id as string),
+          accountId: new ObjectId(account?.id as string),
+        })
+        .toArray();
+
+      expect(documents).toBeTruthy();
+      expect(documents?.length).toBe(1);
     });
   });
 
