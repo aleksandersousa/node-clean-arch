@@ -1,5 +1,5 @@
 import { type Controller } from '@/presentation/protocols';
-import { SaveSurveyResultController } from '@/presentation/controllers/survey-result/save-survey-result/save-survey-result-controller';
+import { SaveSurveyResultController } from '@/presentation/controllers';
 import { makeLogControllerDecorator } from '@/main/factories/decorators';
 import { makeDbSaveSurveyResult, makeDbLoadSurveyById } from '@/main/factories/usecases';
 
