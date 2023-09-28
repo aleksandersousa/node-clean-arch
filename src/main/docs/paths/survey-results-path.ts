@@ -4,12 +4,13 @@ export const surveyResultsPath = {
 
     tags: ['Respostas das Enquetes'],
     summary: 'Api para criar ou atualizar respostas de enquetes',
+    description: 'Essa rota só pode ser executada por **usuários autenticados**',
     parameters: [
       {
         in: 'path',
         name: 'surveyId',
         required: true,
-        description: 'id da pesquisa',
+        description: 'ID da enquete a ser respondida',
         schema: {
           type: 'string',
         },
@@ -46,12 +47,13 @@ export const surveyResultsPath = {
 
     tags: ['Respostas das Enquetes'],
     summary: 'Api para consultar o resultado de uma enquete',
+    description: 'Essa rota só pode ser executada por **usuários autenticados**',
     parameters: [
       {
         in: 'path',
         name: 'surveyId',
         required: true,
-        description: 'id da pesquisa',
+        description: 'ID da enquete a ser respondida',
         schema: {
           type: 'string',
         },

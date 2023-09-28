@@ -31,7 +31,7 @@ export const MongoHelper = {
     return account as T;
   },
 
-  parseDocuments<T>(collection: Array<WithId<Document>>): T[] {
+  parseDocuments<T>(collection: any[]): T[] {
     const mappedCollection = collection.map(c => MongoHelper.parseDocument<T>(c)) as T[];
 
     return mappedCollection;

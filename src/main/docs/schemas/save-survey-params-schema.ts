@@ -3,4 +3,5 @@ export const saveSurveyParamsSchema = {
   properties: {
     answer: { type: 'string' },
   },
+  required: ['answer'],
 };
