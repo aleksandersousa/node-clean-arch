@@ -14,6 +14,7 @@ import MockDate from 'mockdate';
 
 const mockRequest = (): HttpRequest => ({
   params: { surveyId: 'any_id' },
+  accountId: 'any_account_id',
 });
 
 type SutTypes = {
@@ -54,7 +55,7 @@ describe('LoadSurveyResult Controller', () => {
 
     await sut.handle(mockRequest());
 
-    expect(loadSpy).toHaveBeenCalledWith('any_id');
+    expect(loadSpy).toHaveBeenCalledWith('any_id', 'any_account_id');
   });
 
   test('Should return 403 if LoadSurveyById returns null', async () => {

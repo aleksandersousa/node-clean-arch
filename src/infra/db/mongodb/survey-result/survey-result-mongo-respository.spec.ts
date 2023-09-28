@@ -141,7 +141,7 @@ describe('Account Mongo Repository', () => {
         },
       ]);
 
-      const surveyResult = await sut.loadBySurveyId(survey?.id as string);
+      const surveyResult = await sut.loadBySurveyId(survey?.id as string, account?.id as string);
 
       expect(surveyResult).toBeTruthy();
       expect(surveyResult?.surveyId).toBe(survey?.id);
@@ -156,8 +156,9 @@ describe('Account Mongo Repository', () => {
     test('Should return null if there is no surveyResult', async () => {
       const sut = makeSut();
       const survey = await makeSurvey();
+      const account = await makeAccount();
 
-      const surveyResult = await sut.loadBySurveyId(survey?.id as string);
+      const surveyResult = await sut.loadBySurveyId(survey?.id as string, account?.id as string);
 
       expect(surveyResult).toBeNull();
     });
